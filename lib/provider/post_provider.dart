@@ -24,7 +24,7 @@ class PostProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-//This function will be called when user wishes to update/add an expense
+//This function will be called when user wishes to update/add an post
   Future<void> createPost(
       {required String title,
       required String desc,
@@ -38,7 +38,7 @@ class PostProvider extends ChangeNotifier {
     }
   }
 
-//This function will be called when user wishes to fetch an all expenses.
+//This function will be called when user wishes to fetch an all posts.
   Future<void> getPosts() async {
     try {
       setLoading(true);
