@@ -33,7 +33,10 @@ class _CreatePostState extends State<CreatePost> {
     return Scaffold(
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: const Text("Create Post")),
+      appBar: AppBar(
+        title: const Text("Create Post"),
+        centerTitle: true,
+      ),
       body: Form(
           key: _formKey,
           child: Padding(

@@ -1,3 +1,4 @@
+import 'package:api_practice/common/widgets/snack_bar.dart';
 import 'package:api_practice/model/post_model.dart';
 import 'package:api_practice/pages/post/single_post.dart';
 import 'package:api_practice/provider/post_provider.dart';
@@ -26,8 +27,10 @@ class _PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     PostProvider postProvider = Provider.of<PostProvider>(context);
-    final post = postProvider.selectedPost;
-    Widget postCard({required String title, required String desc}) {
+    Widget postCard(
+        {required String title,
+        required String desc,
+        Function()? handleDelete}) {
       return Column(
         children: [
           Container(
@@ -57,11 +60,7 @@ class _PostPageState extends State<PostPage> {
                     ],
                   ),
                 ),
-                InkWell(
-                    onTap: () async {
-                      await postProvider.deletePost(post ?? PostModel);
-                    },
-                    child: const Icon(Icons.delete)),
+                InkWell(onTap: handleDelete, child: const Icon(Icons.delete)),
               ],
             ),
           ),
@@ -107,8 +106,12 @@ class _PostPageState extends State<PostPage> {
                                 //   // );
                                 // }
                               },
-                              child:
-                                  postCard(title: post!.title, desc: post.body),
+                              child: postCard(
+                                  handleDelete: () async {
+                                    await postProvider.deletePost(post);
+                                  },
+                                  title: post!.title,
+                                  desc: post.body),
                             );
                           },
                         ),
