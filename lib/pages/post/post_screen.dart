@@ -22,10 +22,10 @@ class _PostPageState extends State<PostPage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     PostProvider postProvider = Provider.of<PostProvider>(context);
+    final post = postProvider.selectedPost;
     Widget postCard({required String title, required String desc}) {
       return Column(
         children: [
@@ -33,16 +33,34 @@ class _PostPageState extends State<PostPage> {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             width: double.infinity,
             decoration: BoxDecoration(color: Colors.black.withOpacity(0.05)),
-            height: MediaQuery.of(context).size.height * 0.2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            height: MediaQuery.of(context).size.height * 0.22,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        desc,
+                        style: TextStyle(
+                            overflow: TextOverflow.clip, fontSize: 12),
+                      )
+                    ],
+                  ),
                 ),
-                Text(desc)
+                InkWell(
+                    onTap: () async {
+                      await postProvider.deletePost(post);
+                    },
+                    child: const Icon(Icons.delete)),
               ],
             ),
           ),
@@ -54,7 +72,7 @@ class _PostPageState extends State<PostPage> {
     }
 
     return Scaffold(
-      key:  _scaffoldKey,
+      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
         title: const Text("All Posts"),
@@ -67,7 +85,7 @@ class _PostPageState extends State<PostPage> {
           SingleChildScrollView(
             child: Container(
               child: postProvider.loadingPost
-                  ?const Center(child: const CircularProgressIndicator())
+                  ? const Center(child: const CircularProgressIndicator())
                   : Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
                       child: SizedBox(
@@ -79,29 +97,18 @@ class _PostPageState extends State<PostPage> {
                             return GestureDetector(
                               onTap: () async {
                                 await postProvider.getPostById(post.id);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PostDetailPage(),
-                                  ),
-                                );
+                                // if (mounted) {
+                                //   // Navigator.push(
+                                //   //   context,
+                                //   //   MaterialPageRoute(
+                                //   //     builder: (context) => PostDetailPage(),
+                                //   //   ),
+                                //   // );
+                                // }
                               },
-                              child: postCard(
-                                  title: post!.title, desc: post.body),
+                              child:
+                                  postCard(title: post!.title, desc: post.body),
                             );
-                            // Column(
-                            //   children: [
-                            //     Text(post!.title),
-                            //     Text(post.body),
-                            //     ElevatedButton(
-                            //       onPressed: () {
-                            //         // Call a provider method here
-                            //         // postProvider.deletePost(post.id);
-                            //       },
-                            //       child: Text('Delete'),
-                            //     ),
-                            //   ],
-                            // );
                           },
                         ),
                       ),

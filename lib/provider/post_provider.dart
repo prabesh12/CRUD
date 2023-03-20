@@ -68,6 +68,23 @@ class PostProvider extends ChangeNotifier {
     }
   }
 
+// methods to remove post
+
+  void removePost(int id) {
+    _posts?.removeWhere((post) => post.id == id);
+    notifyListeners();
+  }
+
+  Future<void> deletePost(PostModel post) async {
+    try {
+      await dioService.deletePost(post.id);
+      removePost(post.id);
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
+
   setLoading(bool loading) {
     loadingPost = loading;
     notifyListeners();

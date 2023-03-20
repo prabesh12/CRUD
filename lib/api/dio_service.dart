@@ -56,4 +56,13 @@ class DioService {
       throw error;
     }
   }
+
+  Future<void> deletePost(int id) async {
+    try {
+      final String path = '/posts/$id';
+      await dio.delete(path);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

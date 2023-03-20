@@ -14,13 +14,13 @@ class PostDetailPage extends StatefulWidget {
 class _PostDetailPageState extends State<PostDetailPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      var x = Provider.of<PostProvider>(context, listen: false);
-      x.getPostById(x.selectedPostId);
-    });
-  }
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     var x = Provider.of<PostProvider>(context, listen: true);
+  //     x.getPostById(x.selectedPostId);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
