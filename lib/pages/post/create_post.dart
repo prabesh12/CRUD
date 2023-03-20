@@ -1,4 +1,5 @@
 import 'package:api_practice/common/widgets/custom_button.dart';
+import 'package:api_practice/common/widgets/snack_bar.dart';
 import 'package:api_practice/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,6 @@ class _CreatePostState extends State<CreatePost> {
 
   @override
   Widget build(BuildContext context) {
-
     PostProvider postProvider = Provider.of<PostProvider>(context);
     return Scaffold(
       key: _scaffoldKey,
@@ -50,12 +50,13 @@ class _CreatePostState extends State<CreatePost> {
                   keyboardType: TextInputType.text,
                   controller: titleController,
                   autofocus: false,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autovalidateMode: AutovalidateMode.disabled,
                   validator: (value) {
                     return Validator.validateEmpty(value.toString());
                   },
                   decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 8),
                       border: OutlineInputBorder()),
                 ),
                 SizedBox(
@@ -67,11 +68,12 @@ class _CreatePostState extends State<CreatePost> {
                 ),
                 TextFormField(
                   keyboardType: TextInputType.text,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autovalidateMode: AutovalidateMode.disabled,
                   autofocus: false,
                   controller: descController,
                   decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 0, horizontal: 8),
                       border: OutlineInputBorder()),
                   validator: (value) {
                     return Validator.validateEmpty(value.toString());
@@ -87,9 +89,10 @@ class _CreatePostState extends State<CreatePost> {
                           title: titleController.text,
                           desc: descController.text,
                         );
+                        titleController.clear();
+                        descController.clear();
+                        showSnackBar(context, "Post Created Successfully");
                       }
-                      titleController.clear();
-                      descController.clear();
                     },
                   ),
                 )

@@ -1,3 +1,4 @@
+import 'package:api_practice/model/post_model.dart';
 import 'package:api_practice/pages/post/single_post.dart';
 import 'package:api_practice/provider/post_provider.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class _PostPageState extends State<PostPage> {
                       ),
                       Text(
                         desc,
-                        style: TextStyle(
+                        style: const TextStyle(
                             overflow: TextOverflow.clip, fontSize: 12),
                       )
                     ],
@@ -58,7 +59,7 @@ class _PostPageState extends State<PostPage> {
                 ),
                 InkWell(
                     onTap: () async {
-                      await postProvider.deletePost(post);
+                      await postProvider.deletePost(post ?? PostModel);
                     },
                     child: const Icon(Icons.delete)),
               ],
