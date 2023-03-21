@@ -1,5 +1,3 @@
-import 'package:api_practice/common/widgets/snack_bar.dart';
-import 'package:api_practice/model/post_model.dart';
 import 'package:api_practice/pages/post/single_post.dart';
 import 'package:api_practice/provider/post_provider.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +24,7 @@ class _PostPageState extends State<PostPage> {
 
   @override
   Widget build(BuildContext context) {
+    BuildContext outer = context;
     PostProvider postProvider = Provider.of<PostProvider>(context);
     Widget postCard(
         {required String title,
@@ -97,14 +96,14 @@ class _PostPageState extends State<PostPage> {
                             return GestureDetector(
                               onTap: () async {
                                 await postProvider.getPostById(post.id);
-                                // if (mounted) {
-                                //   // Navigator.push(
-                                //   //   context,
-                                //   //   MaterialPageRoute(
-                                //   //     builder: (context) => PostDetailPage(),
-                                //   //   ),
-                                //   // );
-                                // }
+                                if (mounted) {
+                                  Navigator.push(
+                                    outer,
+                                    MaterialPageRoute(
+                                      builder: (outer) => PostDetailPage(),
+                                    ),
+                                  );
+                                }
                               },
                               child: postCard(
                                   handleDelete: () async {
